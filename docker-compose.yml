@@ -1,0 +1,54 @@
+zookeeper1:
+  image: jplock/zookeeper:3.4.8
+  volumes:
+    - "./dockerFiles/zoo.cfg:/opt/zookeeper/conf/zoo.cfg"
+    - "./dockerFiles/myid1:/tmp/zookeeper/myid"
+  links:
+    - dnsdock
+  hostname: zookeeper1
+  dns: 172.17.0.1
+  environment:
+    - DNSDOCK_NAME=zookeeper1
+    - DNSDOCK_IMAGE=zookeeper1
+  ports:
+    - "2181:2181"
+    - 2888
+    - 3888
+zookeeper2:
+  image: jplock/zookeeper:3.4.8
+  volumes:
+    - "./dockerFiles/zoo.cfg:/opt/zookeeper/conf/zoo.cfg"
+    - "./dockerFiles/myid2:/tmp/zookeeper/myid"
+  links:
+    - dnsdock
+  hostname: zookeeper2
+  dns: 172.17.0.1
+  environment:
+    - DNSDOCK_NAME=zookeeper2
+    - DNSDOCK_IMAGE=zookeeper2
+  ports:
+    - "2182:2181"
+    - 2888
+    - 3888
+zookeeper3:
+  image: jplock/zookeeper:3.4.8
+  volumes:
+    - "./dockerFiles/zoo.cfg:/opt/zookeeper/conf/zoo.cfg"
+    - "./dockerFiles/myid3:/tmp/zookeeper/myid"
+  links:
+    - dnsdock
+  hostname: zookeeper3
+  dns: 172.17.0.1
+  environment:
+    - DNSDOCK_NAME=zookeeper3
+    - DNSDOCK_IMAGE=zookeeper3
+  ports:
+    - "2183:2181"
+    - 2888
+    - 3888
+dnsdock:
+  image: tonistiigi/dnsdock:v1.10.0
+  volumes:
+    - /var/run/docker.sock:/run/docker.sock
+  ports:
+    - 172.17.0.1:53:53/udp
